@@ -1,0 +1,40 @@
+from sklearn import datasets
+iris= datasets.load_iris()
+x_i,y_i=iris.data, iris.target
+
+from sklearn.svm import SVC
+from sklearn.cross_validation import cross_val_score
+import numpy as np
+h_class=SVC(kernel='rbf',C=1.0, gamma=0.7, random_state=101)
+scores=cross_val_score(h_class,x_i,y_i,cv=20,scoring='accuracy')
+print 'Accuracy: % 0.3f' % np.mean(scores)
+
+from sklearn.datasets import load_boston
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+boston=load_boston()
+shuffled=np.random.permutation(boston.target.size)
+x_b=scaler.fit_transformation(boston.data[shuffled,:])
+y_b=boston.target[shuffled]
+
+from random import seed, randint
+sample_count=5000
+test_count=20000
+seed(0)
+sample=list()
+test_sample=list()
+for index, line in enumerate ( open('covtype.data','rb')):
+    if index< sample_count:
+        sample.append(line)
+    else:
+        r=randint(0,index)
+        if r < sample_count:
+            sample[r]=line
+        else:
+            k=randint(0,index)
+            if k<test_count:
+                if len(test_sample)<test_count:
+                    test_sample.append(line)
+                else:
+                    test_sample[k]=line
+
