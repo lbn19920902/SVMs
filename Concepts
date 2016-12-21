@@ -1,0 +1,39 @@
+SVM:
+Soft margins:
+Were introduced by means of a cost function that took into account how serious the error was (as hard margins kept track only if error occurred)
+Svms can became able to withstand non-separability caused by noise
+
+Slack variable: empirical risk (the risk of making a wrong classification as seen from the training data point of view)
+
+Kernel functions instead map the original features into a higher dimensional spare by combining them in a nonlinear way
+
+Standard kernel functions are linear functions( implying no transformations), polynomial functions, radial basis functions(RBF) and sigmoid functions
+
+Hinge loss:
+Penalizes errors linearly, expressing an error when the example is classified on the wrong side of margin, proportional to its distance from the margin itself
+(use cv and grid search to tune and optimize)
+
+hyper parameter( ordered by rank of importance):
+C: penalty value.
+Decreasing it makes the margin larger, thus ignoring more noise but also making for more computations.
+A best value can be normally looked for in the np.logspace(-3,3,7) range
+Kernel: this is the non-linearity workhorse because an SVM can be set to (linear, poly, rbf, sigmoid), or a custom kernel(for experts!). the widely used one is certainly RBF
+Degree: this works with kernel= ‘poly’, signaling the dimensionality of the polynomial expansion.(2-5) works the best
+Gamma: this is a coefficient for ‘rbf’, ‘poly’, and ‘sigmoid’. High values tend to fit data in a better way. The suggested grid search range is np.logspace(-3,3,7)
+Nu:
+This is for regression and classification with nuSVR and nuSVC; this parameter approximates the training points that are not classified with confidence, misclassified points, and correct points inside or on the margin.
+It should be a number in the range[0,1] as it is a proportion relative to your training set. In the end, it acts as C with high proportions enlarging the margin
+Epsilon:
+This parameter specifies how much error an SVR is going to accept by defining an epsilon large range where no penalty is associated with respect to the true value of the point. The suggested search range is np.insert(np.logspace(-4,2,7),0,[0])
+Penalty, loss and dual: for linearSVC, these parameters accept the (‘l1’, ‘squared_hinge’,False),(‘l2’,’hinge’,’True’),(‘l2’,’squared_hinge’,True) and (‘l2’,’squared_hinge’,False)
+(‘l2’,’hinge’,True)=SVC(kernel=’linear’)
+
+Advantage:
+a	They can handle majority of the supervised problems such as regression, classification, and anomaly detection, though they are actually best at binary classification
+b	They provide a good handling of noisy data and outliers and they tend to overfit less as they only work with the support vectors
+c	They work fine with wide datasets( more features than examples); though, as with other machine learning algorithms, an SVM would gain both from dimensionality reduction and feature selection
+Disadvantage:
+A    they provide just estimates, but no probabilities unless you run some time-consuming and computationally-intensive probability calibration by means of Platt scaling
+B    they scale super-linearly with the number of examples( it puts a strong limitation on the usage of SVMs for large datasets)
+
+
